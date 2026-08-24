@@ -9,11 +9,6 @@ public class UIEventJS extends EventJS {
 	public Consumer<UI> consumer;
 	public int forcedScale = -1;
 
-	@Override
-	public boolean canCancel() {
-		return true;
-	}
-
 	public void replace(Consumer<UI> consumer) {
 		this.consumer = consumer;
 		cancel();

@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.PanoramaRenderer;
+import net.minecraft.client.renderer.texture.CubeMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -64,7 +65,7 @@ public class ScreenKubeJSUI extends Screen {
 		}
 
 		if (hasPanorama) {
-			panorama = new PanoramaRenderer(new ResourceLocation("textures/gui/title/background/panorama"));
+			panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation("textures/gui/title/background/panorama")));
 		}
 
 		startTime = System.currentTimeMillis();

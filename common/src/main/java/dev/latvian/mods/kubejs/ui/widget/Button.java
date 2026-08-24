@@ -6,14 +6,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 
 public class Button extends Widget {
 	public SoundEvent clickSound = null;
 
 	public Button() {
 		super();
-		this.clickSound = SoundEvents.UI_BUTTON_CLICK;
 	}
 
 	@Override
