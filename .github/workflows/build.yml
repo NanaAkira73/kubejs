@@ -32,14 +32,15 @@ jobs:
 
       - name: Increment build number
         id: build_number
-        env:
-          GH_TOKEN: ${{ secrets.BUILD_NUMBER_TOKEN || github.token }}
         run: |
-          current=$(gh api repos/$GITHUB_REPOSITORY/actions/variables/BUILD_NUMBER_2001 --jq '.value' 2>/dev/null)
+          current=$(gh api repos/$GITHUB_REPOSITORY/actions/variables/BUILD_NUMBER_2001 --jq '.value' 2>/dev/null) || true
           if ! [[ "$current" =~ ^[0-9]+$ ]]; then current=0; fi
           next=$((current + 1))
           gh variable set BUILD_NUMBER_2001 --body "$next" --repo "$GITHUB_REPOSITORY" 2>/dev/null || true
           echo "number=$next" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.BUILD_NUMBER_TOKEN || github.token }}
+        continue-on-error: true
 
       - name: Build and Publish with Gradle
         run: ./gradlew build publish --stacktrace --no-daemon
