@@ -1,2 +1,3 @@
 dev.latvian.mods.kubejs.fabric.BuiltinKubeJSFabricPlugin
 dev.latvian.mods.kubejs.fabric.BuiltinKubeJSFabricClientPlugin client
+dev.latvian.mods.kubejs.ui.KubeJSUIPlugin client

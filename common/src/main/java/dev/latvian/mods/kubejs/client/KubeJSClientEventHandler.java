@@ -13,6 +13,7 @@ import dev.latvian.mods.kubejs.client.painter.Painter;
 import dev.latvian.mods.kubejs.core.ImageButtonKJS;
 import dev.latvian.mods.kubejs.item.ItemTooltipEventJS;
 import dev.latvian.mods.kubejs.script.ScriptType;
+import dev.latvian.mods.kubejs.ui.KubeJSUIEventHandler;
 import dev.latvian.mods.kubejs.util.ConsoleJS;
 import dev.latvian.mods.kubejs.util.Tags;
 import net.minecraft.client.Minecraft;
@@ -147,6 +148,9 @@ public class KubeJSClientEventHandler {
 		if (screen instanceof TitleScreen && !ConsoleJS.STARTUP.errors.isEmpty() && CommonProperties.get().startupErrorGUI) {
 			return new KubeJSErrorScreen(screen, ConsoleJS.STARTUP);
 		}
+
+		// KubeJS UI system - check for screen replacement
+		screen = KubeJSUIEventHandler.screenOpening(screen);
 
 		return screen;
 	}
