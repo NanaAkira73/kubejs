@@ -5,10 +5,7 @@ import dev.latvian.mods.kubejs.ui.widget.Widget;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.PanoramaRenderer;
-import net.minecraft.client.renderer.texture.CubeMap;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -19,10 +16,6 @@ public class ScreenKubeJSUI extends Screen {
 	public final Consumer<UI> consumer;
 	public final int forcedScale;
 	public boolean hasShader;
-	public boolean hasPanorama;
-	private PanoramaRenderer panorama;
-	private long startTime;
-	private int tick;
 
 	public ScreenKubeJSUI(String id, Screen original, Consumer<UI> consumer, int forcedScale) {
 		super(Component.literal("KubeJS UI: " + id));
@@ -31,7 +24,6 @@ public class ScreenKubeJSUI extends Screen {
 		this.consumer = consumer;
 		this.forcedScale = forcedScale;
 		this.hasShader = false;
-		this.hasPanorama = false;
 	}
 
 	@Override
@@ -43,40 +35,21 @@ public class ScreenKubeJSUI extends Screen {
 		ui.w = width;
 		ui.h = height;
 
-		// Clear previous children
 		ui.children.clear();
 
-		// Let the script build the UI
 		try {
 			consumer.accept(ui);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 
-		// Initialize widget tree
 		ui.init();
-
-		// Check for panorama
-		for (Widget w : ui.allWidgets) {
-			if (w instanceof dev.latvian.mods.kubejs.ui.widget.Panorama) {
-				hasPanorama = true;
-				break;
-			}
-		}
-
-		if (hasPanorama) {
-			panorama = new PanoramaRenderer(new CubeMap(new ResourceLocation("textures/gui/title/background/panorama")));
-		}
-
-		startTime = System.currentTimeMillis();
-		tick = 0;
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 		ui.tick();
-		tick++;
 	}
 
 	@Override
@@ -84,16 +57,9 @@ public class ScreenKubeJSUI extends Screen {
 		ui.mouse.x = mouseX;
 		ui.mouse.y = mouseY;
 
-		// Render panorama if enabled
-		if (hasPanorama && panorama != null) {
-			panorama.render(partialTicks, 1F);
-		}
-
-		// Render widgets
 		ui.renderBackground(graphics, partialTicks);
 		ui.renderForeground(graphics, partialTicks);
 
-		// Render hover text
 		Widget hovered = null;
 		for (Widget w : ui.allWidgets) {
 			if (w.isMouseOver(mouseX, mouseY) && w.getHoverText() != null) {
@@ -159,7 +125,6 @@ public class ScreenKubeJSUI extends Screen {
 
 	@Override
 	public void onClose() {
-		// If we replaced the original, show it on close
 		if (original != null) {
 			Minecraft.getInstance().setScreen(original);
 		} else {
