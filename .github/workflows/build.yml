@@ -33,11 +33,11 @@ jobs:
       - name: Increment build number
         id: build_number
         env:
-          GH_TOKEN: ${{ secrets.BUILD_NUMBER_TOKEN }}
+          GH_TOKEN: ${{ secrets.BUILD_NUMBER_TOKEN || github.token }}
         run: |
-          current=$(gh api repos/$GITHUB_REPOSITORY/actions/variables/BUILD_NUMBER_2001 --jq '.value')
+          current=$(gh api repos/$GITHUB_REPOSITORY/actions/variables/BUILD_NUMBER_2001 --jq '.value' 2>/dev/null || echo "0")
           next=$((current + 1))
-          gh variable set BUILD_NUMBER_2001 --body "$next" --repo "$GITHUB_REPOSITORY"
+          gh variable set BUILD_NUMBER_2001 --body "$next" --repo "$GITHUB_REPOSITORY" 2>/dev/null || true
           echo "number=$next" >> "$GITHUB_OUTPUT"
 
       - name: Build and Publish with Gradle
