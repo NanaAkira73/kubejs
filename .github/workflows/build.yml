@@ -48,3 +48,11 @@ jobs:
           BUILD_NUMBER: ${{ steps.build_number.outputs.number }}
           MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
           SAPS_TOKEN: ${{ secrets.SAPS_TOKEN }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: kubejs-forge-1.20.1
+          path: |
+            forge/build/libs/*.jar
+            fabric/build/libs/*.jar
