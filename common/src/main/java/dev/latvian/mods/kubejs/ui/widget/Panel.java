@@ -47,10 +47,11 @@ public class Panel extends Widget {
 	}
 
 	public void fillBackground(String texture, int w, int h) {
+		UI root = getUi();
 		image(i -> {
 			i.texture = new ResourceLocation(texture);
-			i.width = w;
-			i.height = h;
+			i.width = root.width > 0 ? root.width : w;
+			i.height = root.height > 0 ? root.height : h;
 			i.x = 0;
 			i.y = 0;
 		});
