@@ -1,5 +1,6 @@
 package dev.latvian.mods.kubejs.event;
 
+import dev.latvian.mods.kubejs.util.ConsoleJS;
 import dev.latvian.mods.rhino.WrappedException;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,6 +37,7 @@ public class EventHandlerContainer {
 
 		do {
 			try {
+				ConsoleJS.SERVER.info("KJSDBG HANDLE " + itr.source + ":" + itr.line);
 				itr.handler.onEvent(event);
 			} catch (EventExit exit) {
 				throw exit;
