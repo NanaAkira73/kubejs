@@ -37,7 +37,7 @@ public class EventHandlerContainer {
 
 		do {
 			try {
-				ConsoleJS.SERVER.info("KJSDBG HANDLE " + itr.source + ":" + itr.line);
+				ConsoleJS.SERVER.logger.info("KJSDBG HANDLE " + itr.source + ":" + itr.line);
 				itr.handler.onEvent(event);
 			} catch (EventExit exit) {
 				throw exit;

@@ -162,7 +162,7 @@ public final class EventHandler extends BaseFunction {
 			map[index].add(extraId, handler, source, line[0]);
 		}
 
-		type.console.info("KJSDBG LISTEN " + this + " <- " + source + ":" + line[0]);
+		type.console.logger.info("KJSDBG LISTEN " + this + " <- " + source + ":" + line[0]);
 	}
 
 	@HideFromJS
